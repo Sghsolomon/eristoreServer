@@ -13,11 +13,10 @@ const commentSchema = new Schema(
     },
     text: {
       type: String,
-      required: true,
     },
     author: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {
@@ -27,24 +26,35 @@ const commentSchema = new Schema(
 
 const nikeSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      unique: true,
+    node: {
+      name: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+      model: {
+        type: String,
+        required: true,
+      },
+      market: {
+        state: {
+          highestBid: {
+            amount: {
+              type: Currency,
+              required: true,
+              min: 0,
+            },
+          },
+        },
+      },
+      media: {
+        smallImageUrl: {
+          type: String,
+          required: true,
+        },
+      },
     },
-    image: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    cost: {
-      type: Currency,
-      required: true,
-      min: 0,
-    },
+
     comments: [commentSchema],
   },
   {
