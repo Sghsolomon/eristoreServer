@@ -8,6 +8,7 @@ nikeRouter
   .route("/")
   .get((req, res, next) => {
     Nike.find()
+      .populate("comments.author")
       .then((nikes) => {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json");
@@ -101,7 +102,6 @@ nikeRouter
   .post(authenticate.verifyUser, (req, res, next) => {
     Nike.findById(req.params.nikeId)
       .then((nike) => {
-        console.log("user", req.user);
         if (nike) {
           req.body.author = req.user._id;
           nike.comments.push(req.body);
