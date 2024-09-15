@@ -83,7 +83,7 @@ nikeRouter
 //"/:nikeId/comments"
 nikeRouter
   .route("/:nikeId/comments")
-  .get((req, res, next) => {
+  .get(authenticate.verifyUser, (req, res, next) => {
     Nike.findById(req.params.nikeId)
       .populate("comments.author")
       .then((nike) => {
